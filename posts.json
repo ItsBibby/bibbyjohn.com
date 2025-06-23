@@ -1,0 +1,33 @@
+[
+  {
+    "date": "June 23, 2025",
+    "title": "A new place",
+    "summary": "Welcome Internet travelers to my domain.",
+    "content": "<p>This is just a fun place where I document my ideas, problems, and solutions to various computer problems I may be experiencing or working on. This week's project has been getting this website up and running! Hope you find all the easter eggs! Report any bugs at Bugs@BibbyJohn.com</p>"
+  },
+  {
+    "date": "June 22, 2025",
+    "title": "Redstone is back again",
+    "summary": "The java based Discord bot that has been inactive for years is now back!",
+    "content": "<p>The bot has been completely re-written in python and almost all legacy features are in the process of being ported over! A new era for this fun bot.</p><h4 class='text-lg font-bold mt-4 mb-2 text-gray-200'>New features</h4><ul class='list-disc list-inside text-gray-300 space-y-2'><li><strong>Better error handling:</strong> A robust error handling system has been introduced to combat silent failures and bot crashes.</li><li><strong>New Console:</strong> There is now a new console view for when the bot turns on that displays Ascii art and now accepts developer commands.</li><li><strong>Better Performance:</strong> The new rewrite has allowed for much better performance and less lag when issuing commands.</li><li><strong>Coming soon:</strong> Once the features are fullu ported over, the invite link will be made shared via the bot's website. Stay tuned!.</li></ul>"
+  },
+  {
+    "date": "May 25, 2025",
+    "title": "Live migration from Ubuntu 24.10 (ARM) to Debian 13 (ARM)",
+    "summary": "A step-by-step guide to swapping all Ubuntu components to Debian equivalents. Do not do this on a production system unless you know what you are doing.",
+    "content": "<p>Are you a Ubuntu user? Ever wanted to switch to Debian but didn't want to deal with the easy installer? Well this guide is for you! Here a step by step method of swapping your Ubuntu system for a Debian one! I did this as a fun experiment to see if this could even be possible. Happy to report it is!</p><h4 class='text-lg font-bold mt-4 mb-2 text-gray-200'>Let's Begin:</h4><ol class='list-decimal list-inside text-gray-300 space-y-2'><li>Perform a full system update and then upgrade. \n sudo apt update && upgrade </li><li>Download the latest Debian keyrings directly from the their website.</li><li>Make a backup of the sources, and then replace them with debian ones.</li><li>sudo apt update && upgrade (This might break things, be prepared to debug.)</li><li>This entry is still a work-in-progress. Rest of documentation will be added later. Check back later!</li></ol>"
+  },
+  {
+    "date": "March 10, 2025",
+    "title": "Good ol Bash",
+    "summary": "After extensively using Zsh and fish, I am reminded why Bash will always be the best.",
+    "content": "<p>I do miss autocomplete that both zsh and fish offer. However, lot of the features I need are within bash, if you take time to configure them. I will be putting up the .bashrc file in my repo at somepoint after the new website implementation</p>"
+  },
+  {
+    "date": "January 1, 2025",
+    "title": "No content yet. ",
+    "summary": "This page will be filled later.",
+    "content": "<p>Check out the other entrees in the meantime.</p>"
+  }
+]
+
