@@ -324,7 +324,11 @@
 
             resumeBtn.addEventListener('click', (e) => {
                 e.preventDefault(); // Prevent link navigation. When in doubt --patch. 
-                openResumeModal();
+                if (window.innerWidth < 768) {
+                    window.open('resume.pdf', '_blank');
+                } else {
+                    openResumeModal();
+                }
             });
             resumeModalCloseBtn.addEventListener('click', closeResumeModal);
             resumeModalOverlay.addEventListener('click', closeResumeModal);
