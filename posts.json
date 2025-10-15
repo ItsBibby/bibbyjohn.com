@@ -14,20 +14,20 @@
   {
     "date": "May 25, 2025",
     "title": "Live migration from Ubuntu 24.10 (ARM) to Debian 13 (ARM)",
-    "summary": "A step-by-step guide to swapping all Ubuntu components to Debian equivalents. Do not do this on a production system unless you know what you are doing.",
-    "content": "<p>Are you a Ubuntu user? Ever wanted to switch to Debian but didn't want to deal with the easy installer? Well this guide is for you! Here a step by step method of swapping your Ubuntu system for a Debian one! I did this as a fun experiment to see if this could even be possible. Happy to report it is!</p><h4 class='text-lg font-bold mt-4 mb-2 text-gray-200'>Let's Begin:</h4><ol class='list-decimal list-inside text-gray-300 space-y-2'><li>Perform a full system update and then upgrade. \n sudo apt update && upgrade </li><li>Download the latest Debian keyrings directly from the their website.</li><li>Make a backup of the sources, and then replace them with debian ones.</li><li>sudo apt update && upgrade (This might break things, be prepared to debug.)</li><li>This entry is still a work-in-progress. Rest of documentation will be added later. Check back later!</li></ol>"
+    "summary": "Swapping Ubuntu for Debian without an installer. Do not do this on a production system unless you know what you are doing.",
+    "content": "<p>Ubuntu is incredble distro. It unfortanly gets a lot of hate for its lack of consistancy and always changing nature. However, it got me thinking, what if I turned my Ubuntu Desktop instance into Debian? That sounds crazy/ However, after several hours of life being spent on this random nonsensical questions. I am happy to report that it is possible. I will be working on a guide on how to do this properly in the future. \n For the time being, however, the general idea is to slowly replace each ubuntu component to its debian counterpart. This is a very delicate process that can break your system if not done correctly. There are a lot of moving parts but doing this can teach you a lot about how linux works. Best way to fix something is by breaking it.</p>"
   },
   {
     "date": "March 10, 2025",
-    "title": "Good ol Bash",
-    "summary": "After extensively using Zsh and fish, I am reminded why Bash will always be the best.",
-    "content": "<p>I do miss autocomplete that both zsh and fish offer. However, lot of the features I need are within bash, if you take time to configure them. I will be putting up the .bashrc file in my repo at somepoint after the new website implementation</p>"
+    "title": "Bash still remains the default",
+    "summary": "After extensively using Zsh and Fish shells, I am reminded why Bash will always be the best.",
+    "content": "<p>I do miss autocomplete that both zsh and fish offer. However, lot of the features I need are within bash, if you take time to configure them. For instance, I had no idea that bash had case insensitivty or you can configure every aspect of the shell. For a long time I used Oh My Bash. However, I was never interested in their plugins or other integrations. After a while it made no sense to use it anymore just for a different colored prompt. Therefore, I took on the venture of developing my own .bashrc file. I think it came out great! Still some kinks to work out here and there but overall it fits my needs! I will be putting up the .bashrc file in my repo at somepoint.</p>"
   },
   {
     "date": "January 1, 2025",
-    "title": "No content yet. ",
-    "summary": "This page will be filled later.",
-    "content": "<p>Check out the other entrees in the meantime.</p>"
+    "title": "Issues with Proxmox. ",
+    "summary": "Proxmox is an incredible Type-1 Hypervisor, however, uninstalling it can be a challenge.",
+    "content": "<p>I have used proxmox for several years for all my serious virtual machine needs. It is an extremely powerful hypervisor that only uses a little bit of resources while being able to spin up high-quality VM's that almost feels native. However, as I was migrating my proxmox instance to newer hardware, I noticed altering my existing proxmox instance into a Ubuntu server was not an easy task. After many failed attempts (and thoughts that maybe my flash drivers were going bad.) I realized it was because proxmox was somehow keeping my hardrive locked from changes via installers. It was only after a forceful wipe through the command-line was I able to completely remove proxmox and install a fresh instance of Ubuntu.</p>"
   }
 ]
 
