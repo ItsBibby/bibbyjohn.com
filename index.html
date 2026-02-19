@@ -1,539 +1,57 @@
 <!DOCTYPE html>
-<!-- May the code lead you to whatever you seek. -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bibby's Digital Journal</title>
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
-    <!-- glitch effect stuff -->
-    <style>
-        :root {
-            --bg-color: #23272A;
-            --primary-color: #2C2F33; /* RGB: 44, 47, 51 */
-            --secondary-color: #40444B;
-            --accent-color: #7289DA;
-            --accent-color-soft: #5865f2;
-            --console-color: #3ba55d;
-            --text-color: #dcddde;
-            --glitch-color-2: #4f545c;
-            --header-font: 'Share Tech Mono', monospace;
-            --body-font: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--body-font);
-        }
-
-        /* Glitch effect styles */
-        .glitch-wrapper { position: relative; cursor: pointer; user-select: none; }
-        .glitch-text { font-family: var(--header-font); color: var(--text-color); letter-spacing: .2em; }
-        .glitch-text::before, .glitch-text::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); overflow: hidden; }
-        .glitch-text::before { left: 2px; text-shadow: -2px 0 var(--accent-color-soft); animation: glitch-anim-1 2.5s infinite linear alternate-reverse; }
-        .glitch-text::after { left: -2px; text-shadow: -2px 0 var(--glitch-color-2); animation: glitch-anim-2 2s infinite linear alternate-reverse; }
-        @keyframes glitch-anim-1 { 0% { clip-path: inset(5% 0 85% 0); } 20% { clip-path: inset(25% 0 50% 0); } 40% { clip-path: inset(90% 0 2% 0); } 60% { clip-path: inset(40% 0 45% 0); } 80% { clip-path: inset(75% 0 10% 0); } 100% { clip-path: inset(15% 0 70% 0); } }
-        @keyframes glitch-anim-2 { 0% { clip-path: inset(80% 0 5% 0); } 20% { clip-path: inset(45% 0 50% 0); } 40% { clip-path: inset(5% 0 90% 0); } 60% { clip-path: inset(60% 0 30% 0); } 80% { clip-path: inset(92% 0 4% 0); } 100% { clip-path: inset(30% 0 65% 0); } }
-
-        /* Modal styles */
-        .modal-overlay { transition: opacity 0.3s ease; }
-        .modal-container { transition: transform 0.3s ease, opacity 0.3s ease; }
-        .modal-nav-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(44, 47, 51, 0.5);
-            color: var(--text-color);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s;
-        }
-        .modal-nav-btn:hover { background-color: rgba(64, 68, 75, 0.8); }
-        .modal-nav-btn.prev { left: -60px; }
-        .modal-nav-btn.next { right: -60px; }
-        
-        /* Redacted styling */
-        #console-output { font-family: var(--header-font); color: var(--console-color); white-space: pre-wrap; word-break: break-all; }
-        #console-input { font-family: var(--header-font); background: transparent; border: none; outline: none; color: var(--console-color); width: 100%; }
-        #console-input::placeholder { color: var(--secondary-color); }
-        .console-prompt { color: var(--accent-color); }
-        
-        /* Redacted styling 2 */
-        .corruption-active { animation: body-shake 0.2s infinite linear; }
-        .corruption-active .glitch-wrapper, .corruption-active article, .corruption-active button, .corruption-active .fake-ad {
-            animation: wonky-shake 0.3s infinite alternate;
-        }
-
-        @keyframes body-shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            50% { transform: translate(-1px, 1px) rotate(0.1deg); }
-            100% { transform: translate(1px, -1px) rotate(-0.1deg); }
-        }
-
-        @keyframes wonky-shake {
-            from { transform: rotate(-1deg) translateX(-2px); }
-            to { transform: rotate(1deg) translateX(2px); }
-        }
-
-        .fake-ad {
-            position: fixed;
-            background-color: var(--primary-color);
-            border: 2px solid var(--secondary-color);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            z-index: 60; /* Above modals but below its own buttons */
-            border-radius: 0.75rem;
-        }
-        .fake-ad-header {
-            background-color: var(--secondary-color);
-            padding: 0.5rem;
-            font-family: var(--header-font);
-            cursor: move;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-    </style>
+    <title>~/home</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="antialiased">
+<body>
+    <div id="boot-screen"></div>
 
-    <!-- Tales from the code #1: I see you like exploring. You shall be rewarded. -->
-    <!-- Use this code wisely: (↑↑↓↓←→←→BA) -->
-    <!-- The corruption is everywhere. I can't remove the ads. Wait.. what is asimov.exe? If only I knew the right flags... -->
-
-    <div class="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-        
-        <header class="text-center mb-16">
-            <div id="name-glitch" class="glitch-wrapper inline-block">
-                <h1 class="glitch-text text-4xl sm:text-6xl font-bold tracking-widest" data-text="BIBBY JOHN">BIBBY JOHN</h1>
-            </div>
-            <p id="greeting" class="mt-4 text-lg text-gray-400"></p>
-        </header>
-
-        <!-- Main content area for when user is ONLINE -->
-        <div id="online-content">
-            <section class="mb-16">
-                <div class="bg-primary-color rounded-lg p-6 sm:p-8 shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-accent-color/20">
-                    <h2 class="text-2xl font-bold mb-4" style="font-family: var(--header-font);">Log Entry: System Initialized</h2>
-                    <p class="text-base sm:text-lg leading-relaxed text-gray-300">
-                        Welcome to my digital space. This site serves as a personal repository of my projects, code snippets, and step-by-step guides from my journey through software development and Linux systems. It's my personal knowledge base, shared with the world.
-                    </p>
+    <div id="crt-wrapper">
+        <div class="scanlines"></div>
+        <div class="container">
+            <header>
+                <div class="ascii-art">
+ ____  _ _     _                 _       _           
+| __ )(_) |__ | |__  _   _      | | ___ | |__  _ __  
+|  _ \| | '_ \| '_ \| | | |  _  | |/ _ \| '_ \| '_ \ 
+| |_) | | |_) | |_) | |_| | | |_| | (_) | | | | | | |
+|____/|_|_.__/|_.__/ \__, |  \___/ \___/|_| |_|_| |_|
+                     |___/                                                     
                 </div>
-            </section>
+            </header>
 
             <main>
-                <h2 id="recent-entries-header" class="text-3xl font-bold mb-8 text-center cursor-pointer" style="font-family: var(--header-font);">Recent Entries</h2>
-                <!-- Super cool page stuff -->
-                <div id="posts-container" class="grid grid-cols-1 md:grid-cols-2 gap-6 min-h-[300px]"></div>
+                <div class="resume-block" style="border: 1px solid var(--accent-green); padding: 15px; margin-bottom: 40px;">
+                    <h3 style="margin-top: 0; color: var(--accent-green);">User_Resume.pdf</h3>
+                    <p style="font-size: 0.9em; margin-bottom: 15px;">
+                        [SYSTEM] A comprehensive record of experience and skills is available.
+                    </p>
+                    <div>
+                        <a href="resume.pdf" download style="color: var(--accent-pink); text-decoration: none;">[DOWNLOAD]</a>
+                    </div>
+                </div>
+
+                <div id="feed-container"></div>
+
+            </main>
                 
-                <!-- Pagination Controls -->
-                <div id="pagination-controls" class="flex justify-between items-center mt-12">
-                    <button id="prev-page-btn" class="bg-secondary-color text-text-color font-bold py-2 px-4 rounded hover:bg-accent-color transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                        &larr; Newer Entries
-                    </button>
-                    <span id="page-indicator" class="text-gray-400"></span>
-                    <button id="next-page-btn" class="bg-secondary-color text-text-color font-bold py-2 px-4 rounded hover:bg-accent-color transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
-                        Older Entries &rarr;
-                    </button>
-                </div>
-            </main>
-        </div>
-
-        <!-- Tales from the code #2: Internet is a beautiful thing but what if it disappeared. -->
-        <div id="offline-content" class="hidden">
-            <section class="mb-16">
-                <div class="bg-primary-color rounded-lg p-6 sm:p-8 shadow-lg border border-accent-color/50">
-                    <h2 class="text-2xl font-bold mb-4 text-accent-color" style="font-family: var(--header-font);">Log Entry: Connection Lost... Engaging Privacy Protocol.</h2>
-                    <p class="text-base sm:text-lg leading-relaxed text-gray-300">
-                        Your connection to the main network has been severed. The following logs on digital privacy are provided for your review until the connection is restored. Stay safe out there.
-                    </p>
-                </div>
-            </section>
-            <main>
-                <h2 class="text-3xl font-bold mb-8 text-center" style="font-family: var(--header-font);">Privacy Briefings</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <article class="bg-primary-color rounded-lg p-6 shadow-md"><p class="text-sm text-gray-400 mb-2">CLASSIFIED</p><h3 class="text-xl font-bold mb-3 text-accent-color">Does Digital Privacy Matter?</h3><p class="text-gray-300">In an increasingly connected world, our digital footprint is larger than ever. Protecting your privacy is not about hiding something, it's about controlling your personal data and narrative. It is a fundamental human right.</p></article>
-                    <article class="bg-primary-color rounded-lg p-6 shadow-md"><p class="text-sm text-gray-400 mb-2">CLASSIFIED</p><h3 class="text-xl font-bold mb-3 text-accent-color">You Should Enhance Your Anonymity</h3><p class="text-gray-300">A brief on tools that boost your privacy: use VPNs to mask your IP, utilize the Tor network for anonymous browsing, and choose privacy-respecting search engines like DuckDuckGo. Compartmentalize your digital life.</p></article>
-                    <article class="bg-primary-color rounded-lg p-6 shadow-md"><p class="text-sm text-gray-400 mb-2">CLASSIFIED</p><h3 class="text-xl font-bold mb-3 text-accent-color">The Invisible Fingerprint</h3><p class="text-gray-300">Beyond cookies, sites can identify you via a unique combination of your browser's configuration (plugins, fonts, screen size). This is "browser fingerprinting." Privacy-focused browsers can help mitigate this.</p></article>
-                    <article class="bg-secondary-color rounded-lg p-6 shadow-md text-center flex items-center justify-center"><p class="text-gray-400">Awaiting reconnection...</p></article>
-                </div>
-            </main>
-        </div>
-
-        <footer class="text-center mt-20">
-             <div class="flex justify-center items-center space-x-8">
-                <!-- GitHub link -->
-                <a href="https://github.com/itsbibby" target="_blank" class="flex items-center space-x-2 text-gray-300 hover:text-accent-color transition-colors duration-300"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" /></svg><span>GitHub</span></a>
-                <!-- Resume button -->
-                <a href="#" id="resume-btn" class="flex items-center space-x-2 text-gray-300 hover:text-accent-color transition-colors duration-300"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.507 4.024A2.996 2.996 0 018.485 2H15.5A2.5 2.5 0 0118 4.5v15a2.5 2.5 0 01-2.5 2.5h-8A2.5 2.5 0 015 19.5v-1.75a.75.75 0 011.5 0V19.5a1 1 0 001 1h8a1 1 0 001-1V4.5a1 1 0 00-1-1H8.485a1.496 1.496 0 00-1.478 1.024.75.75 0 01-1.492-.16v-.008z" clip-rule="evenodd" /><path d="M5.595 12.5a.75.75 0 01.75-.75h6.19a.75.75 0 010 1.5H6.345a.75.75 0 01-.75-.75zM5.595 15.5a.75.75 0 01.75-.75h6.19a.75.75 0 010 1.5H6.345a.75.75 0 01-.75-.75zM5.595 9.5a.75.75 0 01.75-.75h3.19a.75.75 0 010 1.5H6.345a.75.75 0 01-.75-.75z" /></svg><span>Resume</span></a>
-            </div>
-        </footer>
-    </div>
-    
-    <!-- Modals -->
-    <div id="secret-message" class="hidden fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-50 p-4"><div style="background-color: rgba(44, 47, 51, 0.95); border-color: var(--secondary-color);" class="border rounded-xl p-8 text-center shadow-2xl relative"><h3 class="text-2xl font-bold mb-4 text-accent-color">You found a Secret!</h3><p>Some of my favorite hobbies include building mechanical keyboards, chess, comics, and computers!</p><button id="close-secret" class="mt-6 bg-accent-color text-white font-bold py-2 px-4 rounded hover:bg-opacity-80 transition-colors">Close</button></div></div>
-    
-    <div id="post-modal-overlay" class="modal-overlay hidden fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-40"></div>
-    <div id="post-modal" class="modal-container hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-3xl z-50">
-        <!-- Modal navigation -->
-        <button id="modal-prev-btn" class="modal-nav-btn prev"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
-        <button id="modal-next-btn" class="modal-nav-btn next"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></button>
-        
-        <div style="background-color: rgba(44, 47, 51, 0.95); border-color: var(--secondary-color);" class="border rounded-xl shadow-2xl max-h-[80vh] flex flex-col">
-            <div class="p-6 border-b flex justify-between items-center" style="border-color: var(--secondary-color);"><div><h3 id="modal-title" class="text-2xl font-bold text-accent-color"></h3><p id="modal-date" class="text-sm text-gray-400"></p></div><button id="modal-close-btn" class="text-gray-400 hover:text-white transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button></div>
-            <div id="modal-content" class="p-6 overflow-y-auto text-gray-300 leading-relaxed"></div>
+            <footer style="margin-top: 50px; color: #555; font-size: 0.8em;">
+                EOF | SYSTEM: NOMINAL 
+            </footer>
         </div>
     </div>
 
-    <!-- Resume modal (After hours I think i made it less ugly) -->
-    <div id="resume-modal-overlay" class="modal-overlay hidden fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm z-40"></div>
-    <div id="resume-modal" class="modal-container hidden fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-4xl h-[90vh] z-50">
-        <div style="background-color: rgba(44, 47, 51, 0.95); border-color: var(--secondary-color);" class="border rounded-xl shadow-2xl h-full flex flex-col">
-            <div class="p-4 border-b flex justify-between items-center flex-shrink-0" style="border-color: var(--secondary-color);">
-                <h3 class="text-xl font-bold text-accent-color">My Resume</h3>
-                <button id="resume-modal-close-btn" class="text-gray-400 hover:text-white transition-colors">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            <div class="flex-grow p-2">
-                 <embed src="resume.pdf" type="application/pdf" width="100%" height="100%" />
-            </div>
-        </div>
+    <div id="cli-output"></div>
+    <div class="cli-bar">
+        <span class="prompt-symbol">guest@terminal:~$</span>
+        <input type="text" id="cli-input" placeholder="type 'help'..." autocomplete="off" spellcheck="false">
     </div>
-
-    <!-- Tales from the code #3: There appears to be real suspicious things in this code. Like what is this? Almost like there is something else here... but what? -->
-    <div id="password-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-50 p-4"><div style="background-color: rgba(44, 47, 51, 0.95); border-color: var(--secondary-color);" class="border rounded-xl p-8 text-center shadow-2xl relative w-full max-w-sm"><h3 class="text-xl font-bold mb-4 text-accent-color" style="font-family: var(--header-font);">Authentication Required</h3><p id="password-error" class="text-red-400 mb-4 h-5"></p><form id="password-form"><input id="password-input" type="password" class="w-full bg-bg-color border border-secondary-color rounded p-2 text-center text-text-color" placeholder="Enter Password..."><button type="submit" class="mt-6 w-full bg-accent-color text-white font-bold py-2 px-4 rounded hover:bg-opacity-80 transition-colors">Authenticate</button></form></div></div>
-    <div id="console-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm flex items-center justify-center z-50 p-4"><div style="background-color: rgba(30, 33, 36, 0.95); border-color: var(--secondary-color);" class="border rounded-xl shadow-2xl relative w-full max-w-2xl h-[60vh] flex flex-col p-4"><div class="flex-shrink-0 flex justify-between items-center mb-2"><span class="text-gray-400">BJ-TERMINAL</span><button id="console-close-btn" class="text-gray-400 hover:text-white transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button></div><div id="console-output" class="flex-grow overflow-y-auto pr-2"></div><div class="flex items-center mt-2"><span class="console-prompt">&gt;</span><input type="text" id="console-input" class="flex-grow ml-2" placeholder="..." autocomplete="off"></div></div></div>
-
-    <!-- Ads -->
-    <div id="ad-1" class="fake-ad hidden w-64" style="top: 20%; left: 15%;"><div class="fake-ad-header"><span>Alert!</span></div><div class="p-4 text-center"><p class="mb-2">Your system has 1,337 security vulnerabilities!</p><button class="bg-green-500 text-white font-bold py-1 px-3 rounded text-sm hover:bg-green-600">Download More RAM</button></div></div>
-    <div id="ad-2" class="fake-ad hidden w-72" style="top: 50%; left: 60%;"><div class="fake-ad-header"><span>You're a Winner!</span></div><div class="p-4 text-center"><p class="text-lg animate-pulse text-yellow-300">You've won a free rubber duck for debugging!</p><p class="text-5xl mt-2">🦆</p></div></div>
-    <div id="ad-3" class="fake-ad hidden w-80" style="top: 35%; left: 35%;"><div class="fake-ad-header"><span>Optimization Required</span></div><div class="p-4 text-center"><p class="mb-2">Your cursor is moving inefficiently. Download our AI-powered mouse driver to increase productivity by 0.001%!</p><button class="bg-blue-500 text-white font-bold py-1 px-3 rounded text-sm hover:bg-blue-600">Optimize Now</button></div></div>
     
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let allPosts = [];
-            let currentPage = 1;
-            const postsPerPage = 4;
-            let currentPostIndex = -1;
-
-            const postsContainer = document.getElementById('posts-container');
-            const prevPageBtn = document.getElementById('prev-page-btn');
-            const nextPageBtn = document.getElementById('next-page-btn');
-            const pageIndicator = document.getElementById('page-indicator');
-
-            const modalPrevBtn = document.getElementById('modal-prev-btn');
-            const modalNextBtn = document.getElementById('modal-next-btn');
-            
-            // Resume modal elements
-            const resumeBtn = document.getElementById('resume-btn');
-            const resumeModalOverlay = document.getElementById('resume-modal-overlay');
-            const resumeModal = document.getElementById('resume-modal');
-            const resumeModalCloseBtn = document.getElementById('resume-modal-close-btn');
-
-            function initializePosts() {
-                fetch('posts.json')
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        allPosts = data;
-                        renderPosts();
-                    })
-                    .catch(error => {
-                        console.error('Error fetching or parsing posts:', error);
-                        postsContainer.innerHTML = `<p class="text-red-400 col-span-2 text-center">Failed to load journal entries. Please check the console for errors.</p>`;
-                    });
-            }
-
-            function renderPosts() {
-                postsContainer.innerHTML = '';
-                const totalPages = Math.ceil(allPosts.length / postsPerPage);
-                prevPageBtn.disabled = currentPage === 1;
-                nextPageBtn.disabled = currentPage === totalPages || allPosts.length === 0;
-                pageIndicator.textContent = allPosts.length > 0 ? `Page ${currentPage} of ${totalPages}` : '';
-                const startIndex = (currentPage - 1) * postsPerPage;
-                const postsToShow = allPosts.slice(startIndex, startIndex + postsPerPage);
-                if (postsToShow.length === 0) {
-                     postsContainer.innerHTML = `<p class="text-gray-400 col-span-2 text-center">${allPosts.length > 0 ? 'No entries on this page.' : 'No journal entries yet. Add one to posts.json!'}</p>`;
-                }
-                postsToShow.forEach((post, index) => {
-                    const postIndex = startIndex + index;
-                    const article = document.createElement('article');
-                    article.className = 'bg-primary-color rounded-lg p-6 shadow-md transition-transform duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-accent-color/10 cursor-pointer';
-                    article.dataset.index = postIndex;
-                    article.innerHTML = `<p class="text-sm text-gray-400 mb-2">${post.date}</p><h3 class="text-xl font-bold mb-3 text-accent-color group-hover:underline">${post.title}</h3><p class="text-gray-300">${post.summary}</p>`;
-                    article.addEventListener('click', () => openModal(postIndex));
-                    postsContainer.appendChild(article);
-                });
-            }
-
-            prevPageBtn.addEventListener('click', () => { if (currentPage > 1) { currentPage--; renderPosts(); } });
-            nextPageBtn.addEventListener('click', () => { if (currentPage < Math.ceil(allPosts.length / postsPerPage)) { currentPage++; renderPosts(); } });
-
-            const openModal = (index) => {
-                currentPostIndex = parseInt(index, 10);
-                const post = allPosts[currentPostIndex];
-                document.getElementById('modal-title').textContent = post.title;
-                document.getElementById('modal-date').textContent = post.date;
-                document.getElementById('modal-content').innerHTML = post.content;
-                modalPrevBtn.style.display = currentPostIndex > 0 ? 'flex' : 'none';
-                modalNextBtn.style.display = currentPostIndex < allPosts.length - 1 ? 'flex' : 'none';
-                document.getElementById('post-modal-overlay').classList.remove('hidden');
-                document.getElementById('post-modal').classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            };
-
-            const closeModal = () => {
-                document.getElementById('post-modal-overlay').classList.add('hidden');
-                document.getElementById('post-modal').classList.add('hidden');
-                document.body.style.overflow = '';
-                currentPostIndex = -1;
-            };
-
-            modalPrevBtn.addEventListener('click', () => { if (currentPostIndex > 0) openModal(currentPostIndex - 1); });
-            modalNextBtn.addEventListener('click', () => { if (currentPostIndex < allPosts.length - 1) openModal(currentPostIndex + 1); });
-            document.getElementById('modal-close-btn').addEventListener('click', closeModal);
-            document.getElementById('post-modal-overlay').addEventListener('click', closeModal);
-            
-            // Resume Modal Logic
-            const openResumeModal = () => {
-                resumeModalOverlay.classList.remove('hidden');
-                resumeModal.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-            };
-            
-            const closeResumeModal = () => {
-                resumeModalOverlay.classList.add('hidden');
-                resumeModal.classList.add('hidden');
-                document.body.style.overflow = '';
-            };
-
-            resumeBtn.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent link navigation. When in doubt --patch. 
-                if (window.innerWidth < 768) {
-                    window.open('resume.pdf', '_blank');
-                } else {
-                    openResumeModal();
-                }
-            });
-            resumeModalCloseBtn.addEventListener('click', closeResumeModal);
-            resumeModalOverlay.addEventListener('click', closeResumeModal);
-
-
-            initializePosts();
-
-            
-            // Greetings
-            console.log("%c[SYSTEM SCAN COMPLETE]", "color:#7289DA; font-size: 14px; font-family: monospace;");
-            console.log("%cGreetings, fellow developer. Looking for talent? Let's connect. Reach out at Hello@BibbyJohn.com", "font-size: 12px; font-family: 'Inter', sans-serif;");
-            
-            // Time-Based greeting
-            document.getElementById('greeting').textContent = new Date().getHours() < 12 ? "Good morning. System clock is nominal." : new Date().getHours() < 18 ? "Good afternoon. All systems are operational." : "Good evening. Entering low-power mode.";
-            
-            // Just a normal message modal
-            const nameElement = document.getElementById('name-glitch');
-            const secretMessage = document.getElementById('secret-message');
-            const closeButton = document.getElementById('close-secret');
-            let clickCount = 0;
-            nameElement.addEventListener('click', () => { clickCount++; if (clickCount === 5) { secretMessage.classList.remove('hidden'); clickCount = 0; } });
-            closeButton.addEventListener('click', () => secretMessage.classList.add('hidden'));
-            secretMessage.addEventListener('click', (e) => { if (e.target === secretMessage) secretMessage.classList.add('hidden'); });
-
-            // I wonder what this could mean. I thought these comments were supposed to be helpful. --fix-site
-            const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
-            let userInput = [];
-            let isRetroModeActive = false; // State variable to track if mode is on
-
-            document.addEventListener('keydown', (e) => {
-                userInput.push(e.key);
-                if (userInput.length > konamiCode.length) userInput.shift();
-
-                if (userInput.toString() === konamiCode.toString()) {
-                    isRetroModeActive = !isRetroModeActive; // Toggle the state
-
-                    if (isRetroModeActive) {
-                        console.log("%cSECRET CODE ACCEPTED. ENGAGING LIGHT MODE.", "color: #43b581; font-size: 16px; font-family: monospace;");
-                        document.documentElement.style.filter = 'invert(1)';
-                    } else {
-                        console.log("%cLIGHT MODE DISENGAGED.", "color: #e84118; font-size: 16px; font-family: monospace;");
-                        document.documentElement.style.filter = 'none';
-                    }
-                    userInput = []; // Reset the input so the code can be entered again
-                }
-            });
-
-            // Offline page logic
-            const onlineContent = document.getElementById('online-content');
-            const offlineContent = document.getElementById('offline-content');
-            const updateOnlineStatus = () => {
-                if (navigator.onLine) {
-                    onlineContent.classList.remove('hidden');
-                    offlineContent.classList.add('hidden');
-                } else {
-                    onlineContent.classList.add('hidden');
-                    offlineContent.classList.remove('hidden');
-                }
-            };
-            window.addEventListener('online', updateOnlineStatus);
-            window.addEventListener('offline', updateOnlineStatus);
-            updateOnlineStatus();
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                    navigator.serviceWorker.register('/sw.js').then(reg => console.log('SW registered.', reg)).catch(err => console.warn('SW registration failed:', err));
-                });
-            }
-            
-            // Corrupt.exe. Do not run if you find it. --now leave.
-            const consoleTrigger = document.getElementById('recent-entries-header');
-            const passwordModal = document.getElementById('password-modal');
-            const passwordForm = document.getElementById('password-form');
-            const passwordInput = document.getElementById('password-input');
-            const passwordError = document.getElementById('password-error');
-            const consoleModal = document.getElementById('console-modal');
-            const consoleCloseBtn = document.getElementById('console-close-btn');
-            const consoleOutput = document.getElementById('console-output');
-            const consoleInput = document.getElementById('console-input');
-            const allAds = document.querySelectorAll('.fake-ad');
-            let consoleClickCount = 0;
-
-            consoleTrigger.addEventListener('click', () => {
-                consoleClickCount++;
-                if (consoleClickCount >= 10) {
-                    passwordModal.classList.remove('hidden');
-                    consoleClickCount = 0;
-                }
-            });
-            
-            passwordForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (passwordInput.value === 'Bc0ol') {
-                    passwordModal.classList.add('hidden');
-                    passwordInput.value = '';
-                    passwordError.textContent = '';
-                    showConsole();
-                } else {
-                    passwordError.textContent = 'ACCESS DENIED';
-                    passwordInput.value = '';
-                }
-            });
-
-            const showConsole = () => {
-                consoleModal.classList.remove('hidden');
-                if (!document.body.classList.contains('corruption-active')) {
-                   consoleOutput.innerHTML = '';
-                   typeToConsole(['Initializing...', 'Establishing connection...', 'Loading security modules...', 'Accessing www.bibbyjohn.com Admin Console.', 'Enter a command.'], () => consoleInput.focus());
-                } else {
-                    consoleInput.focus();
-                }
-            };
-            
-            const stopCorruption = () => {
-                document.body.classList.remove('corruption-active');
-                allAds.forEach(ad => ad.classList.add('hidden'));
-            };
-
-            consoleCloseBtn.addEventListener('click', () => consoleModal.classList.add('hidden'));
-
-            consoleInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    const command = consoleInput.value.trim().toLowerCase();
-                    consoleOutput.innerHTML += `<span class="console-prompt">&gt;</span> ${consoleInput.value}\n`;
-                    consoleInput.value = '';
-
-                     switch (command) {
-                        case 'help':
-                            typeToConsole(['Available commands:', '  help         - Shows this message', '  corrupt.exe  - Unlock the full power of this site', '  hack.exe      - Initiate a hack', '  stop         - Halts any running process (like hack.exe)']);
-                            break;
-                        case 'corrupt.exe':
-                            typeToConsole(['Corrupting website...'], () => {
-                                document.body.classList.add('corruption-active');
-                                allAds.forEach(ad => ad.classList.remove('hidden'));
-                            });
-                            break;
-                        case 'asimov.exe --patch --fix-site --now':
-                             typeToConsole(['Asimov protocol engaged. Reverting system changes...'], () => {
-                                stopCorruption();
-                                typeToConsole(['System integrity restored.']);
-                             });
-                             break;
-                        case 'hack.exe':
-                            typeToConsole(['Engaging global threat map...'], () => {
-                                startThreatMap();
-                            });
-                            break;
-                        case 'stop':
-                            if (threatMapInterval) {
-                                clearInterval(threatMapInterval);
-                                threatMapInterval = null;
-                                typeToConsole(['Process halted.']);
-                            } else {
-                                typeToConsole(['No process is running.']);
-                            }
-                            break;
-                        default:
-                            if(command) typeToConsole([`Command not recognized: ${command}`]);
-                            break;
-                    }
-                    consoleOutput.scrollTop = consoleOutput.scrollHeight;
-                }
-            });
-
-            allAds.forEach(ad => {
-                const header = ad.querySelector('.fake-ad-header');
-                let isDragging = false, offsetX, offsetY;
-                header.addEventListener('mousedown', (e) => { isDragging = true; offsetX = e.clientX - ad.offsetLeft; offsetY = e.clientY - ad.offsetTop; header.style.cursor = 'grabbing'; });
-                document.addEventListener('mousemove', (e) => { if (isDragging) { ad.style.left = `${e.clientX - offsetX}px`; ad.style.top = `${e.clientY - offsetY}px`; } });
-                document.addEventListener('mouseup', () => { isDragging = false; header.style.cursor = 'move'; });
-            });
-
-            let threatMapInterval = null; // Holds the interval for the hack animation
-
-            const startThreatMap = () => {
-                if (threatMapInterval) clearInterval(threatMapInterval); // Clear any existing hack animation
-
-                const threats = ['BRUTEFORCE', 'DDoS', 'SQL_INJECT', 'XSS_PACKET', 'MAL_PACKET', 'ROOT_ACCESS'];
-                const locations = ['EAST_US', 'WEST_EU', 'APAC', 'SOUTH_AM', 'AFRICA', 'RUSSIA_FED'];
-
-                threatMapInterval = setInterval(() => {
-                    const ip = `SRC: ${(Math.random() * 255).toFixed(0)}.${(Math.random() * 255).toFixed(0)}.${(Math.random() * 255).toFixed(0)}.${(Math.random() * 255).toFixed(0)}`;
-                    const threat = threats[Math.floor(Math.random() * threats.length)];
-                    const location = locations[Math.floor(Math.random() * locations.length)];
-                    const status = Math.random() > 0.5 ? '<span style="color: #e84118;">BLOCKED</span>' : '<span style="color: #4cd137;">MITIGATED</span>';
-                    
-                    const line = `${ip.padEnd(23)} ${location.padEnd(12)} ${threat.padEnd(14)} ${status}`;
-                    consoleOutput.innerHTML += line + '\n';
-                    consoleOutput.scrollTop = consoleOutput.scrollHeight; // Auto-scroll
-                }, 400); // Add a new line every 400ms
-            };
-
-             const typeToConsole = (lines, onFinished) => {
-                let lineIndex = 0;
-                const typeLine = () => {
-                    if (lineIndex < lines.length) {
-                        consoleOutput.innerHTML += lines[lineIndex] + '\n';
-                        consoleOutput.scrollTop = consoleOutput.scrollHeight;
-                        lineIndex++;
-                        setTimeout(typeLine, Math.random() * 100 + 50);
-                    } else if (onFinished) onFinished();
-                };
-                typeLine();
-            };
-        });
-    </script>
+    <script src="blog.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
 <!--

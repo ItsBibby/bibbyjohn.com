@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>~/projects</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="boot-screen"></div>
+
+    <div id="crt-wrapper">
+        <div class="scanlines"></div>
+        <div class="container">
+            <header>
+                <div class="ascii-art">
+ ____  ____   ___       _ _____ ____ _____ ____  
+|  _ \|  _ \ / _ \     | | ____/ ___|_   _/ ___| 
+| |_) | |_) | | | | _  | |  _|| |     | | \___ \ 
+|  __/|  _ <| |_| || |_| | |__| |___  | |  ___) |
+|_|   |_| \_\\___/  \___/|_____\____| |_| |____/ 
+                </div>
+            </header>
+
+            <main>
+                <h3>user@system:~/projects$ ls -lah</h3>
+                <p style="color: #555; margin-bottom: 20px;">total 24K</p>
+
+                <table class="file-list">
+                    <tr>
+                        <td class="permissions">-rwxr--r--</td>
+                        <td class="user">root</td>
+                        <td class="size">10.2MB</td>
+                        <td class="name"><a href="#">redstone.py</a></td>
+                    </tr>
+                    <tr>
+                        <td class="permissions">-rwxr--r--</td>
+                        <td class="user">root</td>
+                        <td class="size">8.1GB</td>
+                        <td class="name"><a href="#">secret_project.zip</a></td>
+                    </tr>
+                </table>
+            </main>
+        </div>
+    </div>
+
+    <div id="cli-output"></div>
+    <div class="cli-bar">
+        <span class="prompt-symbol">guest@terminal:~$</span>
+        <input type="text" id="cli-input" placeholder="type 'help'..." autocomplete="off" spellcheck="false">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+<!--
+This site is written and developed by Bibby 
+A place for fun, innovation, and learning.
+© 2025-2026, Bibby John, All rights reserved.
+-->
